@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>File Managements</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .fa,
+        .fas {
+            color: #858585;
+        }
+        
+        .fa-folder {
+            color: rgb(74, 158, 255);
+        }
+        
+        i.fa,
+        table i.fas {
+            font-size: 16px;
+            margin-right: 6px;
+        }
+        
+        i.action {
+            cursor: pointer;
+        }
+        
+        a {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="mb-3"></div>
+        <%- include('../partials/flash')%>
+
+            <div class="row align-items-center py-5">
+                <div class="col-6">
+                    <h3>
+                        File Manager</h2>
+                </div>
+                <div class="col-6">
+                    <div class="dropdown text-right">
+                        <a class="dropdown-toggle text-primary" data-toggle="dropdown">Tài Khoản</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/logout">
+                                <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp; Đăng xuất</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+            </ol>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                    <span class="fa fa-search"></span>
+                    </span>
+                </div>
+                <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <div class="btn-group my-3">
+
+                <a href="/folders/<%=id%>" type="button" class="btn btn-light border"> <i class="fas fa-file"></i> Create folder</a>
+                <a href="/uploads/<%=id%>" type="button" class="btn btn-light border"> <i class="fas fa-file"></i> Upload file</a>
+
+
+            </div>
+            <table class="table table-hover border">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Last modified</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                    if (file && file.length >0) {
+                        for (f of file) { 
+                    %>
+                        <tr>
+                            <td>
+                                <% 
+                                    let type = 'file'
+                                    f.type === 'folder' ? type='folder' : type='file' 
+                                %>
+                                    <i class="fa fa-<%=type%>"></i>
+                                    <%
+                                    let path = '' 
+                                    if (type === "folder") path = f.id
+                                %>
+                                        <a href="/<%=path%>">
+                                            <%=f.name %>
+                                        </a>
+                            </td>
+                            <td>
+                                <%= f.type %>
+                            </td>
+                            <td>-</td>
+                            <% const date = f.updatedAt.toLocaleDateString() %>
+                                <td>
+
+                                    <%=date%>
+                                </td>
+                                <td>
+                                    <% if (type==="file") {%>
+                                        <a href="/uploads/<%=f.name%>" download><i class="fa fa-download action"></i></a>
+                                        <% } else {%>
+                                            <a><i class="fa fa-download action"></i></a>
+                                            <% } %>
+
+                                                <a href="/delete/<%=f.id%>"><i class="fa fa-trash action"></i></a>
+
+
+                                </td>
+                        </tr>
+                        <% }} else{%>
+                            <tr>
+                                <td>
+                                    <h5>It's Empty Here!</h3>
+                                </td>
+                            </tr>
+
+                            <% } %>
+
+                </tbody>
+            </table>
+
+
+
+    </div>
+
+
+
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+
+</body>
+
+</html>

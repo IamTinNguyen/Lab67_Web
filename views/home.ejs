@@ -1,0 +1,48 @@
+<% layout('layouts/boilerplate')%>
+
+
+    <div class="row">
+        <div class="col-6 offset-3">
+            <h1 class="text-primary mb-3">Danh sách sản phẩm</h1>
+            <button class="btn btn-success mb-3">Thêm sản phẩm</button>
+            <p>Chọn một sản phẩm cụ thể để xem chi tiết</p>
+            <div>
+                <table class="table table-striped">
+                    <thead>
+
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        <% for(let [k,p] of products.entries()) { %>
+                            <tr>
+                                <th scope="row">
+                                    <%= k +1 %>
+                                </th>
+                                <td>
+                                    <%= p.productName %>
+                                </td>
+                                <td>
+                                    <%= p.productPrice %>
+                                </td>
+                                <td>
+                                    <p><a href="#">Chỉnh sửa</a> | <a href="#">Xóa</a></p>
+                                </td>
+                            </tr>
+
+                            <% } %>
+
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
