@@ -19,9 +19,7 @@ const userRoutes = require("./routes/users");
 const fileRoutes = require("./routes/files");
 
 // DB_URL : mongodb+srv://nguyentrungtin:DOP78DWQCX3E83oM@tincluster.lljme.mongodb.net/Lab67
-const dbUrl =
-    process.env.DB_URL ||
-    "mongodb+srv://nguyentrungtin:DOP78DWQCX3E83oM@tincluster.lljme.mongodb.net/Lab67";
+const dbUrl = "mongodb+srv://nguyentrungtin:DOP78DWQCX3E83oM@tincluster.lljme.mongodb.net/Lab67";
 
 mongoose.connect(dbUrl);
 
